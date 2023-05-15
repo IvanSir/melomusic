@@ -25,7 +25,7 @@
         <div class="header__actions">
             <div class="header__action header__action--signin">
                 {% if request.user.is_authenticated %}
-                <a class="header__action-btn" href="#" style="pointer-events: none">
+                <a class="header__action-btn" href="{% url 'single-user' request.user.pk %}">
                     <span>{{ request.user.email }}</span>
                 </a>
                 <a class="header__action-btn" href="{% url 'logout' %}">

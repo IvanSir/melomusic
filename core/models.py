@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, \
     BaseUserManager, PermissionsMixin
@@ -32,9 +33,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, default='default')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    picture = models.ImageField(upload_to='UsersPictures/', default='UsersPictures/default.jpg')
 
     objects = UserManager()
 
+    friends = models.ManyToManyField(to='User')
     USERNAME_FIELD = 'email'
 
 

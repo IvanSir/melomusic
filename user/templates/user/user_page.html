@@ -1,0 +1,103 @@
+{% extends 'main.html' %}
+{% block title %} <title>User Page</title>{% endblock title %}
+{% block content %}
+<!-- main content -->
+<main class="main">
+    <div class="container-fluid">
+        <div class="row row--grid">
+            <div class="col-12">
+                <div class="article article--page">
+                    <!-- article content -->
+                    <div class="article__content">
+                        <div class="article__artist">
+                            <img src="{{user.picture.url}}" alt="">
+                            <div>
+                                <h1>{{user.email}}</h1>
+                                {% if user.pk != request.user.pk %}
+                                    {% if  is_friend %}
+                                    {% comment %} <button id="remove_friend_id" onclick="">Remove Friend</button> {% endcomment %}
+                                    <h5><a href="{% url 'remove-friend' user.pk %}">Remove friend</a></h5>
+                                    {% else %}
+                                    {% comment %} <button id="add_friend_id">Add Friend</button> {% endcomment %}
+                                    <h5><a href="{% url 'add-friend' user.pk %}">Add friend</a></h5>
+                                    {% endif %}
+
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <p>Name: {{ user.name }}</p>
+                        <p>Email: {{ user.email }}</p>
+                        <p>Username: {{ user.username }}</p>
+                        <p>Is Staff: {{ user.is_staff }}</p>
+
+                    </div>
+                    <!-- end article content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- releases -->
+        <section class="row row--grid">
+            <!-- title -->
+            {% if playlists %}
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Playlists</h2>
+                </div>
+            </div>
+            <!-- end title -->
+            
+            
+            {% for playlist in playlists %}
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="album">
+                    <div class="album__cover">
+                        <img src="{{playlist.picture.url}}" alt="">
+                        <a href="{% url 'single-playlist' playlist.pk %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
+                    </div>
+                    <div class="album__title">
+                        <h3><a href="{% url 'single-playlist' playlist.pk %}">{{playlist.title}}</a></h3>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% if friends %}
+
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Friends</h2>
+                </div>
+            </div>
+            <!-- end title -->
+            
+            
+            {% for friend in friends %}
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="album">
+                    <div class="album__cover">
+                        <img src="{{friend.picture.url}}" alt="">
+                        <a href="{% url 'single-user' friend.pk %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
+                    </div>
+                    <div class="album__title">
+                        <h3><a href="{% url 'single-user' friend.pk %}">{{friend.username}}</a></h3>
+                        {% comment %} <span>
+                            {% for artist in album.artists.all %}
+                                <a href="{% url 'single-artist' artist.slug artist.id %}">{{artist.title}}</a>,
+                            {% endfor %}
+                        </span> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+        </section>
+        <!-- end releases -->
+
+    </div>
+</main>
+<!-- end main content -->
+    
+{% endblock content %}
