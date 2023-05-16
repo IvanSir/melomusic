@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
-    
+    'channels',
     'fontawesomefree',
     'rest_framework',
     'storages',
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'album',
     'playlist',
     'genre',
+    'shared_rooms',
     'core',
     'home',
     'user',

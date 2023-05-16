@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include('music.urls')),
     path('', include('user.urls')),
     path('', include('playlist.urls')),
+    path('', include('shared_rooms.urls')),
     path('accounts/', include('allauth.urls')),
     path('api/', include('API.urls')),
 

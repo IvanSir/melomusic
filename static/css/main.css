@@ -7069,3 +7069,40 @@ body::-webkit-scrollbar-thumb {
     height: 4px !important;
     border-radius: 4px !important;
 }
+
+.custom-table {
+    margin-top: 20px;
+}
+
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+}
+
+.table thead th {
+    color: #7f5af0;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+    color: white;
+}
