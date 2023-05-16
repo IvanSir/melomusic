@@ -29,6 +29,13 @@
                 <div class="main__title main__title--page">
                     <h1>{{song.title}} - {% for artist in song.artists.all %} {{artist.title}}, {% endfor %}</h1>
                 </div>
+                {% if is_favourite %}
+                <a href="{% url 'remove-favourite-song' song.slug song.pk%}">DisLike</a>
+                
+                {% else %}
+                <a href="{% url 'add-favourite-song' song.slug song.pk%}">Like</a>
+
+                {% endif %}
             </div>
             <!-- end title -->
 

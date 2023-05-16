@@ -53,12 +53,40 @@ def SingleSongPage(request, slug, pk):
     # Songs from this artist
     artist_albums = Album.objects.filter(artists=song.artists.first())[:6]
     music_comments_count = song.musiccomment_set.filter(active=True).count()
+    
+    fav_playlist = request.user.playlists.get(title='Favourites')
+    
+    is_favourite = song in fav_playlist.music.all()
     context = {
         'song' : song, 
         'player' : song,
         'artist_albums' : artist_albums,
         'form' : form,
-        'comments_count' : music_comments_count
+        'comments_count' : music_comments_count,
+        'is_favourite': is_favourite
     }
 
     return render(request, 'music/single-song.html', context)
+
+
+
+def add_favourite(request, slug, pk):
+    '''Songs page view'''
+    song = Music.objects.get(slug=slug, pk=pk)
+    
+    fav_playlist = request.user.playlists.get(title='Favourites')
+    fav_playlist.music.add(song)
+    
+
+    return redirect('single-song', slug,pk)
+
+
+def remove_favourite(request, slug, pk):
+    '''Songs page view'''
+    song = Music.objects.get(slug=slug, pk=pk)
+    
+    fav_playlist = request.user.playlists.get(title='Favourites')
+    fav_playlist.music.remove(song)
+    
+
+    return redirect('single-song', slug,pk)

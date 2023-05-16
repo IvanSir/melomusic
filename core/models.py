@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, \
     BaseUserManager, PermissionsMixin
 
+from playlist.models import Playlist
+
 class UserManager(BaseUserManager):
     '''Custom user manager'''
     def create_user(self, email, password=None, **extra_fields):
@@ -39,6 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     friends = models.ManyToManyField(to='User')
     USERNAME_FIELD = 'email'
+    
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        if not self.playlists.all():
+            Playlist.objects.create(owner=self)        
 
 
 class Comment(models.Model):

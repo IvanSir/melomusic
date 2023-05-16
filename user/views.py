@@ -11,6 +11,7 @@ from django.conf import settings
 from core.models import User
 
 from music.models import Music
+from playlist.models import Playlist
 from user.forms import CustomUserCreationForm
 
 from .serializers import CustomUserSerializer
@@ -87,13 +88,16 @@ def SingleUserPage(request, pk):
         playlists = page_user.playlists.all()
     else:
         playlists = page_user.playlists.filter(is_private=False)
+        
+    copied_playlists = Playlist.objects.filter(copies=request.user)
     
     context = {
         'user' : page_user,
         'friends': user_friends,
         'player' : new_song_for_player,
         'is_friend': is_friend,
-        'playlists': playlists
+        'playlists': playlists,
+        'copied_playlists': copied_playlists
     }
 
     return render(request, 'user/user_page.html', context)

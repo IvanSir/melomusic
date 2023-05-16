@@ -30,6 +30,16 @@
             <div class="col-12">
                 <div class="main__title main__title--page">
                     <h1>{{playlist.title}}</h1>
+                    {% if is_not_owner %}
+                    {% if is_copied %}
+                    <h4><a href="{% url 'uncopy-playlist' playlist.pk%}">Delete copy</a></h4>
+                    
+                    {% else %}
+                    <h4><a href="{% url 'copy-playlist' playlist.pk%}">Copy</a></h4>
+
+                    {% endif %}
+                    {% endif %}
+                    
                 </div>
             </div>
             <!-- end title -->
