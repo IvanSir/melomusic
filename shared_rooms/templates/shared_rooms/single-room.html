@@ -1,0 +1,47 @@
+<!-- single-room.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Single Room</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Single Room</h1>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+        <input type="text" id="chat-message-input" placeholder="Type your message">
+        <button type="submit">Send</button>
+    </form>
+    <script>
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + room.pk
+            + '/'
+        );
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            const message = data['message'];
+            const username = data['username'];
+            // Handle the received message and update the chat UI
+            // For example:
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = '<strong>' + username + ':</strong> ' + message;
+            document.querySelector('#chat-messages').appendChild(messageElement);
+        };
+
+        // Send a message when the form is submitted
+        document.querySelector('#chat-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        });
+    </script>
+</body>
+</html>

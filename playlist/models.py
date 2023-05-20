@@ -10,9 +10,15 @@ class Playlist(models.Model):
     owner = models.ForeignKey('core.User', on_delete=models.CASCADE, related_name='playlists')
     is_private = models.BooleanField(default=False)
     picture = models.ImageField(upload_to='PlaylistPictures/', default='PlaylistPictures/default.jpg')
-    music = models.ManyToManyField(to='music.Music')
+    music = models.ManyToManyField(to='music.Music', through='playlist.PlaylistToMusic')
     copies = models.ManyToManyField('core.User', related_name='copy_playlists')
 
     def __str__(self):
         return self.title
+    
+
+class PlaylistToMusic(models.Model):
+    music = models.ForeignKey(to='music.Music', on_delete=models.CASCADE)
+    playlist = models.ForeignKey(to='playlist.Playlist', on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
 

@@ -5,6 +5,7 @@ from album.models import Album
 from music.forms import MusicCommentForm
 from music.utils import Search
 from core.tasks import send_email_task 
+from playlist.models import Playlist, PlaylistToMusic
 
 def SongsPage(request):
     '''Songs page view'''
@@ -90,3 +91,21 @@ def remove_favourite(request, slug, pk):
     
 
     return redirect('single-song', slug,pk)
+
+
+def get_news(request):
+    friends = request.user.friends.all()
+    favourites = Playlist.objects.filter(owner__in=friends)
+    
+    playlist_to_music = PlaylistToMusic.objects.filter(playlist__in=favourites).order_by('added_at')
+
+    
+    
+    new_song_for_player = Music.objects.filter(published=True).order_by('-created').first()
+    context = {
+        'playlist_to_music' : playlist_to_music, 
+        'player' : new_song_for_player
+    }
+
+    
+    return render(request, 'music/news.html', context)
