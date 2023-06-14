@@ -2,8 +2,14 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+from django.utils.translation import gettext_lazy as _
+
 load_dotenv()
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -98,7 +104,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'NovaMusic.permissionmiddleware.PermissionMiddleware'
+    'NovaMusic.permissionmiddleware.PermissionMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'NovaMusic.urls'
@@ -262,3 +269,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]

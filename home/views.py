@@ -5,6 +5,7 @@ from music.models import Music
 from home.models import HomePagePoster as Poster
 from artist.models import Artist
 from home.utils import Search
+from django.conf import settings
 
 def HomePage(request):
     '''Home page view'''
@@ -17,6 +18,9 @@ def HomePage(request):
     get_newest_albums = Album.objects.filter(published=True).order_by('-created')[:6]
     get_artists = Artist.objects.all().order_by('-created')[:12]
 
+    languages = settings.LANGUAGES
+    selected_language = request.LANGUAGE_CODE
+
     context = {
         'new_albums' : get_newest_albums,
         'genres' : get_genres,
@@ -25,7 +29,9 @@ def HomePage(request):
         'singles' : get_single_songs,
         'top_songs' : get_top_songs,
         'player' : new_song_for_player,
-        'posters' : posters
+        'posters' : posters,
+        'languages': languages,
+        'selected_language': selected_language,
     }
     return render(request, 'home/home.html', context)
 

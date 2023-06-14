@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load i18n %}
 <!-- header -->
 <header class="header">
     <div class="header__content">
@@ -10,33 +10,66 @@
         </div>
 
         <nav class="header__nav">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'songs' %}">Songs</a>
-            <a href="{% url 'artists' %}">Artists</a>
-            <a href="{% url 'albums' %}">Albums</a>
-            <a href="{% url 'news' %}">News</a>
-            <a href="{% url 'shared_rooms' %}">Shared rooms</a>
+            <a href="{% url 'home' %}">{% trans "Home" %}</a>
+            <a href="{% url 'songs' %}">{% trans "Songs" %}</a>
+            <a href="{% url 'artists' %}">{% trans "Artists" %}</a>
+            <a href="{% url 'albums' %}">{% trans "Albums" %}</a>
+            <a href="{% url 'news' %}">{% trans "News" %}</a>
+            <a href="{% url 'shared_rooms' %}">{% trans "Shared Rooms" %}</a>
         </nav>
 
         <form action="{% url 'search' %}" class="header__search" method="get">
-            <input type="text" placeholder="Artist or track" name="query">
+            <input type="text" placeholder="{% trans "Search" %}" name="query">
             <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/></svg></button>
             <button type="button" class="close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></svg></button>
         </form>
 
         <div class="header__actions">
+        <style>
+            .language-dropdown {
+                width: 200px;
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #222227;;
+                border-radius: 4px;
+                background-color: #222227;
+                color: #7f5af0;
+            }
+
+            .language-dropdown option {
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+        <form id="languageForm" action="{% url 'switch_language' %}" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="submitForm()" class="language-dropdown">
+                {% for language_code, language_name in languages %}
+                    <option value="{{ language_code }}" {% if language_code == selected_language %}selected{% endif %}>
+                        {{ language_name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            </form>
+
+            <script>
+                function submitForm() {
+                    document.getElementById("languageForm").submit();
+                }
+            </script>
             <div class="header__action header__action--signin">
                 {% if request.user.is_authenticated %}
                 <a class="header__action-btn" href="{% url 'single-user' request.user.pk %}">
                     <span>{{ request.user.email }}</span>
                 </a>
                 <a class="header__action-btn" href="{% url 'logout' %}">
-                    <span>Log out</span>
+                    <span>{% trans "Log Out" %}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,12a1,1,0,0,0-1-1H11.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L11.41,13H19A1,1,0,0,0,20,12ZM17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V16a1,1,0,0,0-2,0v3a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V8a1,1,0,0,0,2,0V5A3,3,0,0,0,17,2Z"/></svg>
                 </a>
                 {% else %}
                 <a class="header__action-btn" href="{% url 'login' %}">
-                    <span>Sign in</span>
+                    <span>{% trans "Log In" %}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,12a1,1,0,0,0-1-1H11.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L11.41,13H19A1,1,0,0,0,20,12ZM17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V16a1,1,0,0,0-2,0v3a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V8a1,1,0,0,0,2,0V5A3,3,0,0,0,17,2Z"/></svg>
                 </a>
                 {% endif %}

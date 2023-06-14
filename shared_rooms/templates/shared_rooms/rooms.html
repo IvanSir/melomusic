@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load i18n %}
 {% block title %} <title>Playlists</title>{% endblock title %}
 {% block content %}
 <!-- main content -->
@@ -8,9 +9,9 @@
             <!-- breadcrumb -->
             <div class="col-12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb__item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb__item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
                     <li class="breadcrumb__item">></li>
-                    <li class="breadcrumb__item breadcrumb__item--active">Shared Rooms</li>
+                    <li class="breadcrumb__item breadcrumb__item--active">{% trans "Shared Rooms" %}</li>
                 </ul>
             </div>
             <!-- end breadcrumb -->
@@ -18,7 +19,7 @@
             <!-- title -->
             <div class="col-12">
                 <div class="main__title main__title--page">
-                    <h1>All Rooms</h1>
+                    <h1>{% trans "All Rooms" %}</h1>
                 </div>
             </div>
             <!-- end title -->
@@ -32,10 +33,10 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>Room Name</th>
-                        <th>Current</th>
-                        <th>Max Members</th>
-                        <th>Created By</th>
+                        <th>{% trans "Room Name" %}</th>
+                        <th>{% trans "Current" %}</th>
+                        <th>{% trans "Max Members" %}</th>
+                        <th>{% trans "Created By" %}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -45,7 +46,7 @@
                         <td>0</td>
                         <td>{{ room.max_members }}</td>
                         <td>{{ room.creator.name }}</td>
-                        <td><h3><a href="{% url 'single-room' room.pk %}">Join</a></h3></td>
+                        <td><h3><a href="{% url 'single-room' room.pk %}">{% trans "Join" %}</a></h3></td>
                       </tr>
                       {% endfor %}
                     </tbody>

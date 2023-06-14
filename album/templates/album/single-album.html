@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load i18n %}
 {% load poll_extras %}
 {% block title %} <title>{{album.title}} </title>{% endblock title %}
 {% block content %}
@@ -17,9 +18,9 @@
             <!-- breadcrumb -->
             <div class="col-12">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb__item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb__item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
                     <li class="breadcrumb__item">></li>
-                    <li class="breadcrumb__item"><a href="{% url 'albums' %}">Albums</a></li>
+                    <li class="breadcrumb__item"><a href="{% url 'albums' %}">{% trans "Albums" %}</a></li>
                     <li class="breadcrumb__item">></li>
                     <li class="breadcrumb__item breadcrumb__item--active">{{album.title}} - {% for artist in album.artists.all %} {{artist.title}}, {% endfor %}</li>
                 </ul>
@@ -104,7 +105,7 @@
                     <!-- article content -->
                     <div class="article__content">
                         {% if album.description %}
-                        <h4>About new album</h4>
+                        <h4>{% trans "About new album" %}</h4>
                         <p>{{album.description}}</p>
                         {% endif %}
                     </div>
@@ -113,7 +114,7 @@
                     <!-- comments -->
                     <div class="comments">
                         <div class="comments__title">
-                            <h4>Comments</h4>
+                            <h4>{% trans "Comments" %}</h4>
                             <span>{{comments_count}}</span>
                         </div>
 
@@ -139,15 +140,15 @@
                                             {% csrf_token %}
                                             {% for field in form %}
                                             <div class="sign__group">
-                                                <label class="comment__label" for="sign__group">Reply to this comment</label>
+                                                <label class="comment__label" for="sign__group">{% trans "Reply to this comment" %}</label>
                                                 {{field}}
                                             </div>
                                             {% endfor %}
                                             <input type="hidden" name="reply_id" value="{{ comment.id }}">
-                                            <button type="submit" class="sign__btn">Reply</button>
+                                            <button type="submit" class="sign__btn">{% trans "Reply" %}</button>
                                         </form>
                                         {% else %}
-                                            <p class="comments__text">Please log in to be able to leave a reply.</p>
+                                            <p class="comments__text">{% trans "Please log in to be able to leave a reply." %}</p>
                                         {% endif %}
                                 </div>
                             </li>
@@ -173,15 +174,15 @@
                                             {% csrf_token %}
                                             {% for field in form %}
                                             <div class="sign__group">
-                                                <label class="comment__label" for="sign__group">Reply to this reply</label>
+                                                <label class="comment__label" for="sign__group">{% trans "Reply to this reply" %}</label>
                                                 {{field}}
                                             </div>
                                             {% endfor %}
                                             <input type="hidden" name="reply_id" value="{{ reply.id }}">
-                                            <button type="submit" class="sign__btn">Reply</button>
+                                            <button type="submit" class="sign__btn">{% trans "Reply" %}</button>
                                         </form>
                                         {% else %}
-                                            <p class="comments__text">Please log in to be able to leave a reply.</p>
+                                            <p class="comments__text">{% trans "Please log in to be able to leave a reply." %}</p>
                                         {% endif %}
                                 </div>
                             </li>
@@ -204,7 +205,7 @@
                             <button type="submit" class="sign__btn">Send</button>
                         </form>
                         {% else %}
-                            <p class="comments__text">Please log in to be able to leave a comment.</p>
+                            <p class="comments__text">{% trans "Please log in to be able to leave a reply." %}</p>
                         {% endif %}
                     </div>
                     <!-- end comments -->
@@ -217,7 +218,7 @@
                     <!-- title -->
                     <div class="col-12">
                         <div class="main__title main__title--sidebar">
-                            <h3>Other Albums</h3>
+                            <h3>{% trans "Other Albums" %}</h3>
                         </div>
                     </div>
                     <!-- end title -->

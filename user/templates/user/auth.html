@@ -1,5 +1,6 @@
 {% load static %}
 {% load socialaccount %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -280,46 +281,46 @@ footer a {
 	<div class="form-container sign-up-container">
 		<form method="POST" class="sign__form" action="{% url 'register' %}">
             {% csrf_token %}
-			<h1>Create Account</h1>
+			<h1>{% trans "Create Account" %}</h1>
 			{% comment %} <div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 				<a href="{% provider_login_url 'google' process='login' %}" class="social"><i class="fab fa-google-plus-g"></i></a>
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div> {% endcomment %}
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" name="name"/>
-			<input type="email" placeholder="Email" name="email"/>
-			<input type="password" placeholder="Password" name="password"/>
-			<button type="submit">Sign Up</button>
+			<span>{% trans "or use your email for registration" %}</span>
+			<input type="text" placeholder="{% trans "Name" %}" name="name"/>
+			<input type="email" placeholder="{% trans "Email" %}" name="email"/>
+			<input type="password" placeholder="{% trans "Password" %}" name="password"/>
+			<button type="submit">{% trans "Sign Up" %}</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
 		<form method="POST" class="sign__form" action="{% url 'login' %}">
             {% csrf_token %}
-			<h1>Sign in</h1>
+			<h1>{% trans "Log In" %}</h1>
 			<div class="social-container">
 				<a href="{% provider_login_url 'google' process='login' %}" class="social"><i class="fab fa-facebook-f"></i></a>
 				<a href="{% provider_login_url 'google' process='login' %}" class="social"><i class="fab fa-google-plus-g"></i></a>
 				<a href="{% provider_login_url 'google' process='login' %}" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
-			<span>or use your account</span>
-			<input type="email" class="sign__input" placeholder="Email" name="email" />
-			<input type="password" class="sign__input" placeholder="Password" name="password" />
-			<a href="#">Forgot your password?</a>
-			<button class="sign__btn" type="submit">Sign In</button>
+			<span>{% trans "or use your account" %}</span>
+			<input type="email" class="sign__input" placeholder="{% trans "Email" %}" name="email" />
+			<input type="password" class="sign__input" placeholder="{% trans "Password" %}" name="password" />
+			<a href="#">{% trans "Forgot your password?" %}</a>
+			<button class="sign__btn" type="submit">{% trans "Log In" %}</button>
 		</form>
 	</div>
 	<div class="overlay-container">
 		<div class="overlay">
 			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" id="signIn">Sign In</button>
+				<h1>{% trans "Welcome Back!" %}</h1>
+				<p>{% trans "To keep connected with us please login with your personal info" %}</p>
+				<button class="ghost" id="signIn">{% trans "Log In" %}</button>
 			</div>
 			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with us</p>
-				<button class="ghost" id="signUp">Sign Up</button>
+				<h1>{% trans "Hello, Friend!" %}</h1>
+				<p>{% trans "Enter your personal details and start journey with us" %}</p>
+				<button class="ghost" id="signUp">{% trans "Sign Up" %}</button>
 			</div>
 		</div>
 	</div>

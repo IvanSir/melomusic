@@ -13,6 +13,10 @@ from core.models import User
 from music.models import Music
 from playlist.models import Playlist
 from user.forms import CustomUserCreationForm
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils import translation
 
 from .serializers import CustomUserSerializer
 
@@ -136,3 +140,14 @@ def remove_friend(request, pk):
 
     return redirect('single-user', pk)
     # return redirect('profile')
+
+def switch_language(request):
+    if request.method == 'POST':
+        language_code = request.POST.get('language')
+        if language_code in [lang[0] for lang in settings.LANGUAGES]:
+            translation.activate(language_code)
+            request.session['django_language'] = language_code
+            response = HttpResponseRedirect(reverse('home'))  # Replace 'home' with your desired URL
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+            return response
+    return HttpResponseRedirect(reverse('home'))
